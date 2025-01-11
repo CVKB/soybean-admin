@@ -18,7 +18,7 @@ const gap = computed(() => (appStore.isMobile ? 0 : 16));
     <!--
  <NAlert :title="$t('common.warning')" type="warning">
       {{ $t('page.home.branchDesc') }}
-    </NAlert> 
+    </NAlert>
 -->
     <HeaderBanner />
     <CardData />
@@ -31,6 +31,7 @@ const gap = computed(() => (appStore.isMobile ? 0 : 16));
       <NGi span="24 s:24 m:10">
         <NCard :bordered="false" class="card-wrapper">
           <PieChart />
+          <template #action></template>
         </NCard>
       </NGi>
     </NGrid>
