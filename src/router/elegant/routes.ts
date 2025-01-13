@@ -40,6 +40,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'changeover',
+    path: '/changeover',
+    component: 'layout.base$view.changeover',
+    meta: {
+      title: 'changeover',
+      i18nKey: 'route.changeover'
+    }
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',
