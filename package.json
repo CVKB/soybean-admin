@@ -41,7 +41,6 @@
     "dev:prod": "vite --mode prod",
     "gen-route": "sa gen-route",
     "lint": "eslint . --fix",
-    "prepare": "simple-git-hooks",
     "preview": "vite preview",
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
@@ -89,9 +88,7 @@
     "@vitejs/plugin-vue-jsx": "4.1.1",
     "eslint": "9.17.0",
     "eslint-plugin-vue": "9.32.0",
-    "lint-staged": "15.2.11",
     "sass": "1.83.0",
-    "simple-git-hooks": "2.11.1",
     "tsx": "4.19.2",
     "typescript": "5.7.2",
     "unplugin-icons": "0.21.0",
@@ -102,13 +99,6 @@
     "vite-plugin-vue-devtools": "7.6.8",
     "vue-eslint-parser": "9.4.3",
     "vue-tsc": "2.1.10"
-  },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm sa git-commit-verify",
-    "pre-commit": "pnpm typecheck && pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
   },
   "website": "https://admin.soybeanjs.cn"
 }

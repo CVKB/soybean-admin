@@ -18,7 +18,6 @@ export default defineComponent({
       CreateDate: ''
     });
 
-    // 左侧表格列配置
     const columns = [
       { field: 'orderNumber', title: '配料单号' },
       { field: 'productionLine', title: '产线' },
@@ -34,7 +33,6 @@ export default defineComponent({
       { field: 'CreateDate', title: '创建时间' }
     ];
 
-    // 右侧表格数据
     const rightTableData = reactive([
       [
         { name: 'A1', value: 'Value A1' },
@@ -55,7 +53,6 @@ export default defineComponent({
       { field: 'value', title: '值' }
     ];
 
-    // 点击行事件
     const handleRowClick = (row: any) => {
       selectedOrder.value = {
         CONO: 'CONO202501148894',
@@ -80,10 +77,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="h-100vh flex overflow-hidden border">
     <!-- 左侧表格 -->
-    <div class="left-tables">
-      <!-- 配料单列表 -->
+    <div class="w-35% flex flex-col gap-10px">
       <div class="table-container">
         <VxeTable :data="tableData" :columns="columns" border @row-click="handleRowClick">
           <VxeColumn field="orderNumber" title="配料单号" />
@@ -92,61 +88,19 @@ export default defineComponent({
           <VxeColumn field="date" title="配料日期" />
         </VxeTable>
       </div>
-
-      <!-- 详细信息表格 -->
-      <div class="table-container">
-        <VxeTable :data="[selectedOrder]" :columns="detailColumns" border>
-          <VxeColumn field="CONO" title="单号" />
-          <VxeColumn field="Description" title="描述" />
-          <VxeColumn field="LineName" title="产线" />
-          <VxeColumn field="EmployeeName" title="操作员" />
-          <VxeColumn field="CreateDate" title="创建时间" />
-        </VxeTable>
-      </div>
     </div>
-
-    <!-- 右侧垂直表格 -->
-    <div class="right-tables">
-      <div v-for="(data, index) in rightTableData" :key="index" class="resizable-table">
-        <VxeTable :data="data" :columns="rightColumns" border />
+    <!-- 右侧垂直滚动表格 -->
+    <div class="felx-col w-65% flex gap-10px overflow-auto">
+      <div class="table-container">
+        <VxeTable :data="tableData" :columns="columns" border @row-click="handleRowClick">
+          <VxeColumn field="orderNumber" title="配料单号" />
+          <VxeColumn field="productionLine" title="产线" />
+          <VxeColumn field="operator" title="操作人员" />
+          <VxeColumn field="date" title="配料日期" />
+        </VxeTable>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.page-container {
-  display: flex;
-  height: 100vh;
-  box-sizing: border-box;
-}
-
-.left-tables {
-  width: 35%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.right-tables {
-  width: 65%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.table-container {
-  flex: 1;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  background: #fff;
-  overflow: hidden;
-}
-
-.resizable-table {
-  flex: 1;
-  resize: vertical;
-  overflow: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  background: #fff;
-}
-</style>
+<style scoped></style>
