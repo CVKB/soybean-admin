@@ -3,6 +3,7 @@ import type { Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
 import { getPaletteColorByNumber } from '@sa/color';
+import { VxeUI } from 'vxe-table';
 import { SetupStoreId } from '@/enum';
 import { localStg } from '@/utils/storage';
 import {
@@ -71,6 +72,13 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    */
   function setThemeScheme(themeScheme: UnionKey.ThemeScheme) {
     settings.value.themeScheme = themeScheme;
+
+    // 根据主题设置 VxeTable 主题
+    if (themeScheme === 'dark') {
+      VxeUI.setTheme('dark');
+    } else {
+      VxeUI.setTheme('light');
+    }
   }
 
   /**
@@ -91,17 +99,35 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     settings.value.colourWeakness = isColourWeakness;
   }
 
-  /** Toggle theme scheme */
+  // /** Toggle theme scheme */
+  // function toggleThemeScheme() {
+  //   const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto'];
+
+  //   const index = themeSchemes.findIndex(item => item === settings.value.themeScheme);
+
+  //   const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
+
+  //   const nextThemeScheme = themeSchemes[nextIndex];
+
+  //   setThemeScheme(nextThemeScheme);
+  // }
+
   function toggleThemeScheme() {
     const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto'];
 
     const index = themeSchemes.findIndex(item => item === settings.value.themeScheme);
-
     const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
-
     const nextThemeScheme = themeSchemes[nextIndex];
 
+    // 切换主题
     setThemeScheme(nextThemeScheme);
+
+    // 根据主题切换 VxeTable 的主题
+    if (nextThemeScheme === 'dark') {
+      VxeUI.setTheme('dark');
+    } else {
+      VxeUI.setTheme('light');
+    }
   }
 
   /**
