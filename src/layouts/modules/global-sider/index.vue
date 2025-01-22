@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
-import GlobalLogo from '../global-logo/index.vue';
+import { GlobalLogo } from '../global-logo';
 
 defineOptions({
   name: 'GlobalSider'

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useElementSize } from '@vueuse/core';
 import BScroll from '@better-scroll/core';
