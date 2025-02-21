@@ -200,6 +200,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       darkMode,
       val => {
         toggleCssDarkMode(val);
+        localStg.set('darkMode', val);
       },
       { immediate: true }
     );
