@@ -39,59 +39,27 @@ const nameOptions = ref<FilterItem[]>([{ data: '' }]);
 const dateOptions = ref<FilterItem[]>([{ data: '' }]);
 const sexOptions = ref<FilterItem[]>([{ data: '' }]);
 const tableData = ref<TableRow[]>([
-  {
-    id: 10001,
-    name: 'Test10',
-    role: 'Develop',
-    sex: '0',
-    date: '2021-11-14',
-    age: 28,
-    amount: 888,
-    address: 'test abc'
-  },
   { id: 10002, name: 'Test12', role: 'Test', sex: '1', date: '2021-01-20', age: 22, amount: 666, address: 'Guangzhou' },
-  { id: 10003, name: 'Test34', role: 'PM', sex: '1', date: '2020-09-17', age: 32, amount: 89, address: 'Shanghai' },
-  {
-    id: 10004,
-    name: 'Test24',
-    role: 'Designer',
-    sex: '0',
-    date: '2020-10-25',
-    age: 23,
-    amount: 1000,
-    address: 'test abc'
-  },
-  {
-    id: 10005,
-    name: 'Test15',
-    role: 'Develop',
-    sex: '0',
-    date: '2020-12-12',
-    age: 30,
-    amount: 999,
-    address: 'Shanghai'
-  },
-  {
-    id: 10006,
-    name: 'Test36',
-    role: 'Designer',
-    sex: '0',
-    date: '2020-08-21',
-    age: 21,
-    amount: 998,
-    address: 'test abc'
-  },
   { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  {
-    id: 10008,
-    name: 'Test48',
-    role: 'Develop',
-    sex: '1',
-    date: '2021-02-06',
-    age: 35,
-    amount: 999,
-    address: 'test abc'
-  }
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
+  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' }
 ]);
 
 // 格式化性别
@@ -137,8 +105,8 @@ const confirmFilterEvent = (option: FilterItem) => {
 </script>
 
 <template>
-  <div>
-    <VxeTable ref="tableRef" border class="h-full w-full" :filter-config="{ showIcon: false }" :data="tableData">
+  <div class="h-full w-full flex-1 overflow-auto">
+    <VxeTable ref="tableRef" border height="100%" show-overflow :filter-config="{ showIcon: false }" :data="tableData">
       <VxeColumn type="seq" width="60"></VxeColumn>
       <VxeColgroup title="名字">
         <VxeColumn field="name" :filters="nameOptions" :filter-method="nameFilterMethod">
