@@ -105,8 +105,16 @@ const confirmFilterEvent = (option: FilterItem) => {
 </script>
 
 <template>
-  <div class="h-full w-full flex-1 overflow-auto">
-    <VxeTable ref="tableRef" border height="100%" show-overflow :filter-config="{ showIcon: false }" :data="tableData">
+  <div class="h-full w-full">
+    <VxeTable
+      ref="tableRef"
+      height="100%"
+      border
+      show-overflow
+      stripe
+      :filter-config="{ showIcon: false }"
+      :data="tableData"
+    >
       <VxeColumn type="seq" width="60"></VxeColumn>
       <VxeColgroup title="名字">
         <VxeColumn field="name" :filters="nameOptions" :filter-method="nameFilterMethod">

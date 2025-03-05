@@ -2,8 +2,7 @@
 import { nextTick, onMounted, ref } from 'vue';
 import type { VxeTableInstance } from 'vxe-table';
 import axios from 'axios';
-import CodSummary from './modules/cod-summary.vue';
-import TestAda from './modules/test.vue';
+import { NButton, NTabPane, NTabs } from 'naive-ui';
 
 interface ChangeOverInfo {
   id: number;
@@ -60,11 +59,12 @@ onMounted(async () => {
 <template>
   <div class="h-screen max-w-screen overflow-hidden">
     <div class="relative h-full max-h-full max-w-auto flex flex-row">
+      <!-- 左侧表格 -->
       <div class="transition-all duration-300 ease-in-out" :class="{ 'w-210px': isCollapsed, 'w-600px': !isCollapsed }">
-        <!-- 左侧表格 -->
-        <div class="relative h-full">
+        <div class="relative h-full w-auto">
           <VxeTable
             ref="tableRef"
+            class="overflow-auto"
             border
             round
             height="100%"
@@ -96,18 +96,61 @@ onMounted(async () => {
           </NButton>
         </div>
       </div>
-      <!-- 右侧 NCard -->
-      <NCard title="配料单号" class="ml-2 h-full max-h-full min-w-0 flex-shrink flex-grow overflow-hidden">
-        <NTabs type="line" animated>
-          <NTabPane class="h-full w-full overflow-auto" name="123" tab="123">
-            <CodSummary />
+
+      <!-- 右侧 Tabs -->
+      <div class="flex-1 overflow-hidden p-4">
+        <NTabs type="line" class="h-full w-full">
+          <NTabPane name="tab1" tab="Tab 1" class="h-full w-full">
+            <VxeTable
+              class="h-full w-full"
+              border
+              round
+              height="100%"
+              stripe
+              show-overflow
+              show-header-overflow
+              show-footer-overflow
+              :column-config="{ resizable: true }"
+              :row-config="{ isCurrent: true, isHover: true }"
+              :data="tableData"
+            >
+              <VxeColumn field="cono" title="配料单号" width="200"></VxeColumn>
+              <VxeColumn field="createDate" title="配料时间" width="150"></VxeColumn>
+              <VxeColumn field="employeeName" title="操作员" width="100"></VxeColumn>
+              <VxeColumn field="description" title="描述" width="200"></VxeColumn>
+            </VxeTable>
           </NTabPane>
-          <NTabPane class="h-full w-full overflow-auto" name="456" tab="456">
-            <TestAda />
+          <NTabPane name="tab2" tab="Tab 2" class="h-full w-full">
+            <VxeTable
+              class="h-full w-full"
+              border
+              round
+              height="100%"
+              stripe
+              show-overflow
+              show-header-overflow
+              show-footer-overflow
+              :column-config="{ resizable: true }"
+              :row-config="{ isCurrent: true, isHover: true }"
+              :data="tableData"
+            >
+              <VxeColumn field="cono" title="配料单号1" width="200"></VxeColumn>
+              <VxeColumn field="createDate" title="配料时间" width="150"></VxeColumn>
+              <VxeColumn field="employeeName" title="操作员" width="100"></VxeColumn>
+              <VxeColumn field="description" title="描述" width="200"></VxeColumn>
+            </VxeTable>
           </NTabPane>
-          <NTabPane class="h-full w-full overflow-auto" name="789" tab="789"></NTabPane>
+          <!-- 可以继续添加更多的 Tab -->
         </NTabs>
-      </NCard>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* 确保表格容器不会超出屏幕范围 */
+.overflow-auto {
+  overflow-x: auto;
+  max-width: 100%;
+}
+</style>
