@@ -3,6 +3,7 @@ import { nextTick, onMounted, ref } from 'vue';
 import type { VxeTableInstance } from 'vxe-table';
 import axios from 'axios';
 import { NButton, NTabPane, NTabs } from 'naive-ui';
+import CodSummary from './modules/cod-summary.vue';
 
 interface ChangeOverInfo {
   id: number;
@@ -105,7 +106,7 @@ onMounted(async () => {
               class="h-full w-full"
               border
               round
-              height="100%"
+              height="96%"
               stripe
               show-overflow
               show-header-overflow
@@ -117,7 +118,7 @@ onMounted(async () => {
               <VxeColumn field="cono" title="配料单号" width="200"></VxeColumn>
               <VxeColumn field="createDate" title="配料时间" width="150"></VxeColumn>
               <VxeColumn field="employeeName" title="操作员" width="100"></VxeColumn>
-              <VxeColumn field="description" title="描述" width="200"></VxeColumn>
+              <VxeColumn field="description" title="描述"></VxeColumn>
             </VxeTable>
           </NTabPane>
           <NTabPane name="tab2" tab="Tab 2" class="h-full w-full">
@@ -125,7 +126,7 @@ onMounted(async () => {
               class="h-full w-full"
               border
               round
-              height="100%"
+              height="96%"
               stripe
               show-overflow
               show-header-overflow
@@ -140,17 +141,13 @@ onMounted(async () => {
               <VxeColumn field="description" title="描述" width="200"></VxeColumn>
             </VxeTable>
           </NTabPane>
-          <!-- 可以继续添加更多的 Tab -->
+          <NTabPane name="tab3" tab="Tab 3" class="h-full w-full">
+            <CodSummary />
+          </NTabPane>
         </NTabs>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-/* 确保表格容器不会超出屏幕范围 */
-.overflow-auto {
-  overflow-x: auto;
-  max-width: 100%;
-}
-</style>
+<style scoped></style>

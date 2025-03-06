@@ -108,7 +108,7 @@ const confirmFilterEvent = (option: FilterItem) => {
   <div class="h-full w-full">
     <VxeTable
       ref="tableRef"
-      height="100%"
+      height="96%"
       border
       show-overflow
       stripe
