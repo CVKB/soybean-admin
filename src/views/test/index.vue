@@ -14,11 +14,55 @@ interface ChangeOverInfo {
   createDate: string | null;
 }
 
+// 定义 API 返回的数据结构
+interface ChangeOverHistory {
+  Step: number;
+  CreateDate: string;
+  EmployeeName: string;
+  Description: string;
+}
+
+interface Summary {
+  PartNumber: string;
+  Requst: number;
+  Recommend: number;
+  Difference: number;
+}
+
+interface Account {
+  PartNumber: string;
+  Location: string;
+  ReelCount: number;
+  Quantity: number;
+}
+
+interface Detail {
+  PartNumber: string;
+  ReelID: string;
+  Location: string;
+  Quantity: number;
+  MainPartNumber: string | null;
+}
+
+interface ApiResponse {
+  ChangeOverHistory: ChangeOverHistory[];
+  Summary: Summary[];
+  Account: Account[];
+  Detail: Detail[];
+}
+
 const tableRef = ref<VxeTableInstance<ChangeOverInfo>>();
 const tableData = ref<ChangeOverInfo[]>([]);
 const isCollapsed = ref(false); // 控制折叠状态
 
-// 切换折叠状态
+// 定义 ref 数据
+const detailData = ref<Detail[]>([]); // 用于传递给子组件的数据
+const summaryData = ref<Summary[]>([]); // 汇总数据
+const accountData = ref<Account[]>([]); // 账户数据
+const changeOverHistory = ref<ChangeOverHistory[]>([]); // 历史数据
+
+// const detailData = ref([]);
+// // 切换折叠状态
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value;
 };
@@ -48,6 +92,13 @@ onMounted(async () => {
   try {
     const response = await axios.get<ChangeOverInfo[]>('http://192.168.1.230:8081/ChangeOverInfoList?days=5');
     tableData.value = response.data;
+
+    const response1 = await axios.get<ApiResponse>('http://192.168.1.230:8081/CodData?cono=CONO202503049273');
+    detailData.value = response1.data.Detail; // 设置 detailData
+    summaryData.value = response1.data.Summary; // 设置 summaryData
+    accountData.value = response1.data.Account; // 设置 accountData
+    changeOverHistory.value = response1.data.ChangeOverHistory; // 设置 changeOverHistory
+
     // 等待 DOM 更新完成
     await nextTick();
     expandAllEvent();
@@ -101,7 +152,7 @@ onMounted(async () => {
       <!-- 右侧 Tabs -->
       <div class="flex-1 overflow-hidden p-4">
         <NTabs type="line" class="h-full w-full">
-          <NTabPane name="tab1" tab="Tab 1" class="h-full w-full">
+          <NTabPane name="tab1" tab="用量" class="h-full w-full">
             <VxeTable
               class="h-full w-full"
               border
@@ -121,7 +172,7 @@ onMounted(async () => {
               <VxeColumn field="description" title="描述"></VxeColumn>
             </VxeTable>
           </NTabPane>
-          <NTabPane name="tab2" tab="Tab 2" class="h-full w-full">
+          <NTabPane name="tab2" tab="位置" class="h-full w-full">
             <VxeTable
               class="h-full w-full"
               border
@@ -141,8 +192,9 @@ onMounted(async () => {
               <VxeColumn field="description" title="描述" width="200"></VxeColumn>
             </VxeTable>
           </NTabPane>
-          <NTabPane name="tab3" tab="Tab 3" class="h-full w-full">
-            <CodSummary />
+          <NTabPane name="tab3" tab="明细" class="h-full w-full">
+            <!-- 传递 detailData 给 CodSummary 组件 -->
+            <CodSummary :detail-data="detailData" />
           </NTabPane>
         </NTabs>
       </div>

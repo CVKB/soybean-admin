@@ -6,18 +6,31 @@ defineOptions({
   name: 'CodSummary'
 });
 
-// 定义数据结构
+// 定义 props
+const props = defineProps({
+  detailData: {
+    type: Array as () => Array<{
+      PartNumber: string;
+      ReelID: string;
+      Location: string;
+      Quantity: number;
+      MainPartNumber: string | null;
+    }>,
+    required: true
+  }
+});
+
+// 定义表格数据结构
 interface TableRow {
-  id: number;
-  name: string;
-  role: string;
-  sex: string;
-  date: string;
-  age: number;
-  amount: number;
-  address: string;
-  [key: string]: any; // 允许动态字段，解决 column.field 的问题
+  PartNumber: string;
+  ReelID: string;
+  Location: string;
+  Quantity: number;
+  MainPartNumber: string | null;
 }
+
+// 使用 props.detailData 初始化表格数据
+const tableData = ref<TableRow[]>(props.detailData);
 
 // 过滤选项接口，确保 data 属性为必选
 interface FilterOption {
@@ -31,42 +44,7 @@ interface FilterItem extends FilterOption {
 
 // 使用ref定义数据
 const tableRef = ref<any>(null);
-const sexList = ref([
-  { label: '男', value: '1' },
-  { label: '女', value: '0' }
-]);
 const nameOptions = ref<FilterItem[]>([{ data: '' }]);
-const dateOptions = ref<FilterItem[]>([{ data: '' }]);
-const sexOptions = ref<FilterItem[]>([{ data: '' }]);
-const tableData = ref<TableRow[]>([
-  { id: 10002, name: 'Test12', role: 'Test', sex: '1', date: '2021-01-20', age: 22, amount: 666, address: 'Guangzhou' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' },
-  { id: 10007, name: 'Test27', role: 'Test', sex: '1', date: '2021-01-01', age: 29, amount: 2000, address: 'test abc' }
-]);
-
-// 格式化性别
-const formatterSex = ({ cellValue }: { cellValue: string }) => {
-  const item = sexList.value.find(itemS => itemS.value === cellValue);
-  return item ? item.label : '';
-};
 
 // 过滤方法
 const nameFilterMethod = ({ option, row, column }: { option: FilterItem; row: TableRow; column: any }) => {
@@ -74,20 +52,6 @@ const nameFilterMethod = ({ option, row, column }: { option: FilterItem; row: Ta
     return XEUtils.toValueString(row[column.field as keyof TableRow])
       .toLowerCase()
       .includes(option.data);
-  }
-  return true;
-};
-
-const dateFilterMethod = ({ option, row, column }: { option: FilterItem; row: TableRow; column: any }) => {
-  if (option.data) {
-    return XEUtils.isDateSame(row[column.field as keyof TableRow], option.data, 'yyyy-MM-dd');
-  }
-  return true;
-};
-
-const sexFilterMethod = ({ option, row, column }: { option: FilterItem; row: TableRow; column: any }) => {
-  if (option.data) {
-    return row[column.field as keyof TableRow] === option.data;
   }
   return true;
 };
@@ -115,9 +79,8 @@ const confirmFilterEvent = (option: FilterItem) => {
       :filter-config="{ showIcon: false }"
       :data="tableData"
     >
-      <VxeColumn type="seq" width="60"></VxeColumn>
-      <VxeColgroup title="名字">
-        <VxeColumn field="name" :filters="nameOptions" :filter-method="nameFilterMethod">
+      <VxeColgroup title="料号">
+        <VxeColumn field="PartNumber" :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
               <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
@@ -125,39 +88,42 @@ const confirmFilterEvent = (option: FilterItem) => {
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColgroup title="时间">
-        <VxeColumn field="date" :filters="dateOptions" :filter-method="dateFilterMethod">
+      <VxeColgroup title="料卷">
+        <VxeColumn field="ReelID" :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput
-                v-model="option.data"
-                type="date"
-                placeholder="请选择"
-                clearable
-                transfer
-                class="w-full"
-                @change="confirmFilterEvent(option)"
-              ></VxeInput>
+              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
             </div>
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColgroup title="性别">
-        <VxeColumn field="sex" :filters="sexOptions" :filter-method="sexFilterMethod" :formatter="formatterSex">
+      <VxeColgroup title="储位">
+        <VxeColumn field="Location" :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeSelect
-                v-model="option.data"
-                :options="sexList"
-                clearable
-                class="w-full"
-                @change="confirmFilterEvent(option)"
-              ></VxeSelect>
+              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
             </div>
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColumn field="address" title="地址"></VxeColumn>
+      <VxeColgroup title="数量">
+        <VxeColumn field="Quantity" :filters="nameOptions" :filter-method="nameFilterMethod">
+          <template #header="{ column }">
+            <div v-for="(option, index) in column.filters" :key="index">
+              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+            </div>
+          </template>
+        </VxeColumn>
+      </VxeColgroup>
+      <VxeColgroup title="主料">
+        <VxeColumn field="MainPartNumber" :filters="nameOptions" :filter-method="nameFilterMethod">
+          <template #header="{ column }">
+            <div v-for="(option, index) in column.filters" :key="index">
+              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+            </div>
+          </template>
+        </VxeColumn>
+      </VxeColgroup>
     </VxeTable>
   </div>
 </template>
