@@ -67,7 +67,7 @@ const confirmFilterEvent = (option: FilterItem) => {
 
 const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
   trigger: 'cell',
-  allowBtn: true,
+  allowBtn: false,
   orders: ['asc', 'desc'],
   defaultSort: {
     field: 'PartNumber',
@@ -87,12 +87,19 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
       :filter-config="{ showIcon: false }"
       :data="tableData"
       :sort-config="sortConfig"
+      :column-config="{ resizable: true }"
     >
       <VxeColgroup title="料号">
         <VxeColumn field="PartNumber" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
@@ -101,7 +108,13 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
         <VxeColumn field="Requst" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
@@ -110,7 +123,13 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
         <VxeColumn field="Recommend" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
@@ -119,7 +138,13 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
         <VxeColumn field="Difference" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>

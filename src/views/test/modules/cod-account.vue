@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { VxeTablePropTypes } from 'vxe-table';
 import XEUtils from 'xe-utils';
 
 defineOptions({
@@ -62,6 +63,15 @@ const confirmFilterEvent = (option: FilterItem) => {
     $table.updateData();
   }
 };
+const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
+  trigger: 'cell',
+  allowBtn: false,
+  orders: ['asc', 'desc'],
+  defaultSort: {
+    field: 'PartNumber',
+    order: 'asc'
+  }
+});
 </script>
 
 <template>
@@ -74,39 +84,65 @@ const confirmFilterEvent = (option: FilterItem) => {
       stripe
       :filter-config="{ showIcon: false }"
       :data="tableData"
+      :sort-config="sortConfig"
+      :column-config="{ resizable: true }"
     >
       <VxeColgroup title="料号">
-        <VxeColumn field="PartNumber" :filters="nameOptions" :filter-method="nameFilterMethod">
+        <VxeColumn field="PartNumber" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
       </VxeColgroup>
       <VxeColgroup title="储位">
-        <VxeColumn field="Location" :filters="nameOptions" :filter-method="nameFilterMethod">
+        <VxeColumn field="Location" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
       </VxeColgroup>
       <VxeColgroup title="数量">
-        <VxeColumn field="Quantity" :filters="nameOptions" :filter-method="nameFilterMethod">
+        <VxeColumn field="Quantity" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>
       </VxeColgroup>
       <VxeColgroup title="卷数">
-        <VxeColumn field="ReelCount" :filters="nameOptions" :filter-method="nameFilterMethod">
+        <VxeColumn field="ReelCount" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput v-model="option.data" class="w-full" clearable @change="confirmFilterEvent(option)"></VxeInput>
+              <VxeInput
+                v-model="option.data"
+                class="w-full"
+                clearable
+                @change="confirmFilterEvent(option)"
+                @click.stop
+              ></VxeInput>
             </div>
           </template>
         </VxeColumn>

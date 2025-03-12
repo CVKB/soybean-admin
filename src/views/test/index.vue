@@ -6,6 +6,7 @@ import { NButton, NTabPane, NTabs } from 'naive-ui';
 import CodDetail from './modules/cod-detail.vue';
 import CodAccount from './modules/cod-account.vue';
 import CodSummary from './modules/cod-summary.vue';
+import CodHistory from './modules/cod-history.vue';
 
 interface ChangeOverInfo {
   id: number;
@@ -155,14 +156,19 @@ onMounted(async () => {
 
       <div class="flex-1 overflow-hidden p-4">
         <NTabs type="line" class="h-full w-full">
-          <NTabPane name="tab1" tab="用量" class="h-full w-full">
-            <CodSummary :key="summaryDataKey" :detail-data="summaryData" />
+          <NTabPane name="tab1" tab="用量" class="h-full w-full" display-directive="show">
+            <KeepAlive>
+              <CodSummary :key="summaryDataKey" :detail-data="summaryData" />
+            </KeepAlive>
           </NTabPane>
-          <NTabPane name="tab2" tab="位置" class="h-full w-full">
+          <NTabPane name="tab2" tab="位置" class="h-full w-full" display-directive="show">
             <CodAccount :key="accountDataKey" :detail-data="accountData" />
           </NTabPane>
-          <NTabPane name="tab3" tab="明细" class="h-full w-full">
+          <NTabPane name="tab3" tab="明细" class="h-full w-full" display-directive="show">
             <CodDetail :key="detailDataKey" :detail-data="detailData" />
+          </NTabPane>
+          <NTabPane name="tab4" tab="记录" class="h-full w-full" display-directive="show">
+            <CodHistory :key="detailDataKey" :detail-data="changeOverHistory" />
           </NTabPane>
         </NTabs>
       </div>
