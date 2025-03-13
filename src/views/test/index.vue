@@ -69,6 +69,7 @@ const toggleCollapse = () => {
 const summaryDataKey = ref(0);
 const accountDataKey = ref(0);
 const detailDataKey = ref(0);
+const cono = ref(' ');
 
 const getCONOData = async () => {
   const $table = tableRef.value;
@@ -81,6 +82,7 @@ const getCONOData = async () => {
         summaryData.value = response.data.Summary;
         accountData.value = response.data.Account;
         changeOverHistory.value = response.data.ChangeOverHistory;
+        cono.value = currentRecord.cono;
 
         // 更新 key 以强制重新渲染子组件
         summaryDataKey.value += 1;
@@ -155,6 +157,7 @@ onMounted(async () => {
       </div>
 
       <div class="flex-1 overflow-hidden p-4">
+        <NCard class="max-h-100px">{{ cono }}</NCard>
         <NTabs type="line" class="h-full w-full">
           <NTabPane name="tab1" tab="用量" class="h-full w-full" display-directive="show">
             <KeepAlive>

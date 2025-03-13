@@ -67,7 +67,7 @@ const confirmFilterEvent = (option: FilterItem) => {
 
 const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
   trigger: 'cell',
-  allowBtn: false,
+  allowBtn: true,
   orders: ['asc', 'desc'],
   defaultSort: {
     field: 'PartNumber',
@@ -80,7 +80,7 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
   <div class="h-full w-full">
     <VxeTable
       ref="tableRef"
-      height="96%"
+      height="92%"
       border
       show-overflow
       stripe
