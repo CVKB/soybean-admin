@@ -163,7 +163,8 @@ const local: App.I18n.Schema = {
     500: '服务器错误',
     'iframe-page': '外链页面',
     home: '首页',
-    test: '测试'
+    test: '测试',
+    test2: '测试2'
   },
   page: {
     login: {
