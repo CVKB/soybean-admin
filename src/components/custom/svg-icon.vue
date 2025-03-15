@@ -44,6 +44,7 @@ const symbolId = computed(() => {
   const icon = props.localIcon || defaultLocalIcon;
 
   // 返回完整的符号引用路径，例如 "#prefix-iconName"
+  console.log(`#${prefix}-${icon}`);
   return `#${prefix}-${icon}`;
 });
 
