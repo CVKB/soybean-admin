@@ -36,7 +36,7 @@ const DEFAULT_CLASS = 'h-[36px] text-icon';
       <NButton quaternary :class="twMerge(DEFAULT_CLASS, props.class)" v-bind="$attrs">
         <div class="flex-center gap-8px">
           <slot>
-            <SvgIcon :icon="icon" />
+            <SvgIcon :local-icon="icon" />
           </slot>
         </div>
       </NButton>

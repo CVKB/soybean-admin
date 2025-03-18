@@ -114,9 +114,9 @@ function setDropdown(config: Partial<DropdownConfig>) {
 
 let isClickContextMenu = false;
 
-function handleDropdownVisible(visible: boolean) {
+function handleDropdownVisible(value: boolean | undefined) {
   if (!isClickContextMenu) {
-    setDropdown({ visible });
+    setDropdown({ visible: value });
   }
 }
 
@@ -191,7 +191,7 @@ init();
             @contextmenu="handleContextMenu($event, tab.id)"
           >
             <template #prefix>
-              <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
+              <SvgIcon :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
             </template>
             <div class="max-w-240px ellipsis-text">{{ tab.label }}</div>
           </PageTab>

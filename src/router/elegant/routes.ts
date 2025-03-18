@@ -46,7 +46,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'home',
       i18nKey: 'route.home',
-      icon: 'MaterialSymbolsHouseOutline',
+      localIcon: 'lucide--home',
       order: 1
     }
   },
@@ -81,7 +81,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.test',
     meta: {
       title: 'test',
-      i18nKey: 'route.test'
+      i18nKey: 'route.test',
+      localIcon: 'test'
     }
   },
   {
@@ -90,7 +91,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.test2',
     meta: {
       title: 'test2',
-      i18nKey: 'route.test2'
+      i18nKey: 'route.test2',
+      localIcon: 'test',
+      icon: 'hugeicons:activity-01'
     }
   }
 ];

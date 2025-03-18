@@ -30,9 +30,9 @@ function handleSwitch() {
 }
 
 const icons: Record<UnionKey.ThemeScheme, string> = {
-  light: 'line-md:sunny-filled-loop',
-  dark: 'cbi:scene-nightlight',
-  auto: 'material-symbols:hdr-auto'
+  light: 'material-symbols-sunny-rounded',
+  dark: 'cbi-scene-nightlight',
+  auto: 'material-symbols-hdr-auto-rounded'
 };
 
 const icon = computed(() => icons[props.themeSchema]);
