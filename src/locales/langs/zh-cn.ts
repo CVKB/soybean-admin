@@ -163,8 +163,9 @@ const local: App.I18n.Schema = {
     500: '服务器错误',
     'iframe-page': '外链页面',
     home: '首页',
-    test: '测试',
-    test2: '测试2'
+    test: '仓库',
+    test_changeover: '配料',
+    test_changeoverinfo: '配料信息'
   },
   page: {
     login: {

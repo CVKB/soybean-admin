@@ -3,10 +3,10 @@ import { nextTick, onMounted, ref } from 'vue';
 import type { VxeTableInstance } from 'vxe-table';
 import axios from 'axios';
 import { NButton, NTabPane, NTabs } from 'naive-ui';
-import CodDetail from './modules/cod-detail.vue';
-import CodAccount from './modules/cod-account.vue';
-import CodSummary from './modules/cod-summary.vue';
-import CodHistory from './modules/cod-history.vue';
+import CodDetail from '../modules/cod-detail.vue';
+import CodAccount from '../modules/cod-account.vue';
+import CodSummary from '../modules/cod-summary.vue';
+import CodHistory from '../modules/cod-history.vue';
 
 interface ChangeOverInfo {
   id: number;

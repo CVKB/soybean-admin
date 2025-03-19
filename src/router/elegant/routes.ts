@@ -47,7 +47,7 @@ export const generatedRoutes: GeneratedRoute[] = [
       title: 'home',
       i18nKey: 'route.home',
       localIcon: 'lucide--home',
-      order: 1
+      order: 0
     }
   },
   {
@@ -78,22 +78,35 @@ export const generatedRoutes: GeneratedRoute[] = [
   {
     name: 'test',
     path: '/test',
-    component: 'layout.base$view.test',
+    component: 'layout.base',
     meta: {
+      order: 1,
       title: 'test',
       i18nKey: 'route.test',
       localIcon: 'test'
-    }
-  },
-  {
-    name: 'test2',
-    path: '/test2',
-    component: 'layout.base$view.test2',
-    meta: {
-      title: 'test2',
-      i18nKey: 'route.test2',
-      localIcon: 'test',
-      icon: 'hugeicons:activity-01'
-    }
+    },
+    children: [
+      {
+        name: 'test_changeover',
+        path: '/test/changeover',
+        component: 'view.test_changeover',
+        meta: {
+          title: 'test_changeover',
+          i18nKey: 'route.test_changeover',
+          localIcon: 'test',
+        }
+      },
+      {
+        name: 'test_changeoverinfo',
+        path: '/test/changeoverinfo',
+        component: 'view.test_changeoverinfo',
+        meta: {
+          title: 'test_changeoverinfo',
+          i18nKey: 'route.test_changeoverinfo',
+          localIcon: 'test',
+          keepAlive: true
+        }
+      }
+    ]
   }
 ];
