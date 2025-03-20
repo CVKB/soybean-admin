@@ -17,6 +17,7 @@ interface HistoryItem {
 // 使用 defineProps 获取 props（不能使用 `props` 变量）
 const props = defineProps<{
   detailData: HistoryItem[];
+  loading: boolean;
 }>();
 
 // 定义表格数据结构
@@ -80,7 +81,9 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
     <VxeTable
       ref="tableRef"
       height="92%"
+      :cell-config="{ height: 30 }"
       border
+      :loading="loading"
       show-overflow
       stripe
       :filter-config="{ showIcon: false }"

@@ -2,11 +2,11 @@
 import { nextTick, onMounted, ref } from 'vue';
 import type { VxeTableInstance } from 'vxe-table';
 import axios from 'axios';
-import { NButton, NTabPane, NTabs } from 'naive-ui';
-import CodDetail from '../modules/cod-detail.vue';
-import CodAccount from '../modules/cod-account.vue';
-import CodSummary from '../modules/cod-summary.vue';
-import CodHistory from '../modules/cod-history.vue';
+import { NTabPane, NTabs } from 'naive-ui';
+import CodDetail from './modules/cod-detail.vue';
+import CodAccount from './modules/cod-account.vue';
+import CodSummary from './modules/cod-summary.vue';
+import CodHistory from './modules/cod-history.vue';
 
 interface ChangeOverInfo {
   id: number;
@@ -56,6 +56,8 @@ interface ApiResponse {
 const tableRef = ref<VxeTableInstance<ChangeOverInfo>>();
 const tableData = ref<ChangeOverInfo[]>([]);
 const isCollapsed = ref(false);
+const isloading = ref(false);
+const isCONODataloading = ref(false);
 
 const detailData = ref<Detail[]>([]);
 const summaryData = ref<Summary[]>([]);
@@ -77,6 +79,7 @@ const getCONOData = async () => {
     const currentRecord = $table.getCurrentRecord();
     if (currentRecord) {
       try {
+        isCONODataloading.value = true;
         const response = await axios.get<ApiResponse>(`http://192.168.1.230:8081/CodData?cono=${currentRecord.cono}`);
         detailData.value = response.data.Detail;
         summaryData.value = response.data.Summary;
@@ -88,6 +91,7 @@ const getCONOData = async () => {
         summaryDataKey.value += 1;
         accountDataKey.value += 1;
         detailDataKey.value += 1;
+        isCONODataloading.value = false;
       } catch (error) {
         console.error('Failed to fetch data:', error);
       }
@@ -106,11 +110,12 @@ const expandAllEvent = () => {
 
 onMounted(async () => {
   try {
+    isloading.value = true;
     const response = await axios.get<ChangeOverInfo[]>('http://192.168.1.230:8081/ChangeOverInfoList?days=5');
     tableData.value = response.data;
-
     await nextTick();
     expandAllEvent();
+    isloading.value = false;
   } catch (error) {
     console.error('Failed to fetch data:', error);
   }
@@ -120,15 +125,17 @@ onMounted(async () => {
 <template>
   <div class="h-screen max-w-screen overflow-hidden">
     <div class="relative h-full max-h-full max-w-auto flex flex-row">
-      <div class="transition-all duration-300 ease-in-out" :class="{ 'w-210px': isCollapsed, 'w-600px': !isCollapsed }">
+      <div class="transition-all duration-300 ease-in-out" :class="{ 'w-225px': isCollapsed, 'w-600px': !isCollapsed }">
         <div class="relative h-full w-auto">
           <VxeTable
             ref="tableRef"
             class="overflow-auto"
             border
             round
+            :cell-config="{ height: 30 }"
             height="100%"
             stripe
+            :loading="isloading"
             show-overflow
             show-header-overflow
             show-footer-overflow
@@ -143,16 +150,11 @@ onMounted(async () => {
             <VxeColumn field="employeeName" title="操作员" width="80" :visible="!isCollapsed"></VxeColumn>
             <VxeColumn field="description" title="描述" width="150" :visible="!isCollapsed"></VxeColumn>
           </VxeTable>
-          <NButton
-            class="absolute right-13 top-6 translate-x-1/2 transform -translate-y-1/2"
-            strong
-            secondary
-            round
-            type="info"
+          <MenuToggler
+            class="absolute right-10 top-6 translate-x-1/2 transform -translate-y-1/2"
+            :collapsed="isCollapsed"
             @click="toggleCollapse"
-          >
-            {{ isCollapsed ? '展开' : '折叠' }}
-          </NButton>
+          />
         </div>
       </div>
 
@@ -161,17 +163,17 @@ onMounted(async () => {
         <NTabs type="line" class="h-full w-full">
           <NTabPane name="tab1" tab="用量" class="h-full w-full" display-directive="show">
             <KeepAlive>
-              <CodSummary :key="summaryDataKey" :detail-data="summaryData" />
+              <CodSummary :key="summaryDataKey" :detail-data="summaryData" :loading="isCONODataloading" />
             </KeepAlive>
           </NTabPane>
           <NTabPane name="tab2" tab="位置" class="h-full w-full" display-directive="show">
-            <CodAccount :key="accountDataKey" :detail-data="accountData" />
+            <CodAccount :key="accountDataKey" :detail-data="accountData" :loading="isCONODataloading" />
           </NTabPane>
           <NTabPane name="tab3" tab="明细" class="h-full w-full" display-directive="show">
-            <CodDetail :key="detailDataKey" :detail-data="detailData" />
+            <CodDetail :key="detailDataKey" :detail-data="detailData" :loading="isCONODataloading" />
           </NTabPane>
           <NTabPane name="tab4" tab="记录" class="h-full w-full" display-directive="show">
-            <CodHistory :key="detailDataKey" :detail-data="changeOverHistory" />
+            <CodHistory :key="detailDataKey" :detail-data="changeOverHistory" :loading="isCONODataloading" />
           </NTabPane>
         </NTabs>
       </div>

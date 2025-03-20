@@ -4,29 +4,28 @@ import type { VxeTablePropTypes } from 'vxe-table';
 import XEUtils from 'xe-utils';
 
 defineOptions({
-  name: 'CodDetail'
+  name: 'CodSummary'
 });
 
-interface DetailItem {
+interface SummaryItem {
   PartNumber: string;
-  ReelID: string;
-  Location: string;
-  Quantity: number;
-  MainPartNumber: string | null;
+  Requst: number;
+  Recommend: number;
+  Difference: number;
 }
 
 // 使用 defineProps 获取 props（不能使用 `props` 变量）
 const props = defineProps<{
-  detailData: DetailItem[];
+  detailData: SummaryItem[];
+  loading: boolean;
 }>();
 
 // 定义表格数据结构
 interface TableRow {
   PartNumber: string;
-  ReelID: string;
-  Location: string;
-  Quantity: number;
-  MainPartNumber: string | null;
+  Requst: number;
+  Recommend: number;
+  Difference: number;
 }
 
 // 使用 props.detailData 初始化表格数据
@@ -66,9 +65,10 @@ const confirmFilterEvent = (option: FilterItem) => {
     $table.updateData();
   }
 };
+
 const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
   trigger: 'cell',
-  allowBtn: false,
+  allowBtn: true,
   orders: ['asc', 'desc'],
   defaultSort: {
     field: 'PartNumber',
@@ -82,22 +82,18 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
     <VxeTable
       ref="tableRef"
       height="92%"
+      :cell-config="{ height: 30 }"
       border
       show-overflow
       stripe
+      :loading="loading"
       :filter-config="{ showIcon: false }"
       :data="tableData"
       :sort-config="sortConfig"
       :column-config="{ resizable: true }"
     >
       <VxeColgroup title="料号">
-        <VxeColumn
-          field="PartNumber"
-          :filters="nameOptions"
-          :filter-method="nameFilterMethod"
-          sortable
-          :min-width="160"
-        >
+        <VxeColumn field="PartNumber" :filters="nameOptions" :filter-method="nameFilterMethod" sortable>
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
               <VxeInput
@@ -111,8 +107,8 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColgroup title="料卷">
-        <VxeColumn field="ReelID" :filters="nameOptions" :filter-method="nameFilterMethod" sortable :width="500">
+      <VxeColgroup title="需求数量">
+        <VxeColumn field="Requst" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
               <VxeInput
@@ -126,8 +122,8 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColgroup title="储位">
-        <VxeColumn field="Location" :filters="nameOptions" :filter-method="nameFilterMethod" sortable :min-width="100">
+      <VxeColgroup title="推荐数量">
+        <VxeColumn field="Recommend" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
               <VxeInput
@@ -141,29 +137,8 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
           </template>
         </VxeColumn>
       </VxeColgroup>
-      <VxeColgroup title="数量">
-        <VxeColumn field="Quantity" :filters="nameOptions" :filter-method="nameFilterMethod" sortable :min-width="100">
-          <template #header="{ column }">
-            <div v-for="(option, index) in column.filters" :key="index">
-              <VxeInput
-                v-model="option.data"
-                class="w-full"
-                clearable
-                @change="confirmFilterEvent(option)"
-                @click.stop
-              ></VxeInput>
-            </div>
-          </template>
-        </VxeColumn>
-      </VxeColgroup>
-      <VxeColgroup title="主料">
-        <VxeColumn
-          field="MainPartNumber"
-          :filters="nameOptions"
-          :filter-method="nameFilterMethod"
-          sortable
-          :min-width="160"
-        >
+      <VxeColgroup title="差异数量">
+        <VxeColumn field="Difference" sortable :filters="nameOptions" :filter-method="nameFilterMethod">
           <template #header="{ column }">
             <div v-for="(option, index) in column.filters" :key="index">
               <VxeInput
@@ -180,3 +155,13 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
     </VxeTable>
   </div>
 </template>
+
+<style>
+.vxe-cell--wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.vxe-cell--sort {
+  top: 5px;
+}
+</style>

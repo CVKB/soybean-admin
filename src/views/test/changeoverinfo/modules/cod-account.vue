@@ -16,6 +16,7 @@ interface AccountItem {
 
 const props = defineProps<{
   detailData: AccountItem[];
+  loading: boolean;
 }>();
 
 // 定义表格数据结构
@@ -79,8 +80,10 @@ const sortConfig = ref<VxeTablePropTypes.SortConfig<TableRow>>({
     <VxeTable
       ref="tableRef"
       height="92%"
+      :cell-config="{ height: 30 }"
       border
       show-overflow
+      :loading="loading"
       stripe
       :filter-config="{ showIcon: false }"
       :data="tableData"
