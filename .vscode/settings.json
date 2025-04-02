@@ -16,5 +16,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "unocss.root": ["./"],
   "vue.server.hybridMode": true,
-  "i18n-ally.sourceLanguage": "zh-cn"
+  "i18n-ally.sourceLanguage": "zh-cn",
+  "workbench.editor.enablePreview": true
 }

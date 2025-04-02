@@ -89,7 +89,14 @@ const showModal1 = ref(false);
       <VxeColumn field="age" title="Age"></VxeColumn>
       <VxeColumn field="address" title="Address" :visible="false"></VxeColumn>
     </VxeTable>
-    <NModal v-model:show="showModal1" title="选择料表" preset="card" draggable class="h-80% max-h-80% max-w-90% w-80%">
+    <NModal
+      v-model:show="showModal1"
+      display-directive="show"
+      title="选择料表"
+      preset="card"
+      draggable
+      class="h-80% max-h-80% max-w-90% w-80%"
+    >
       <SelectWorkNumber></SelectWorkNumber>
     </NModal>
   </div>

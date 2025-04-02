@@ -93,7 +93,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'test_changeover',
           i18nKey: 'route.test_changeover',
-          localIcon: 'test'
+          localIcon: 'test',
+          keepAlive: true
         }
       },
       {
