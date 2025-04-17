@@ -1,115 +1,115 @@
-/** The global namespace for the app */
+/** 应用的全局命名空间 */
 declare namespace App {
-  /** Theme namespace */
+  /** 主题命名空间 */
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber;
 
-    /** Theme setting */
+    /** 主题设置 */
     interface ThemeSetting {
-      /** Theme scheme */
+      /** 主题方案 */
       themeScheme: UnionKey.ThemeScheme;
-      /** grayscale mode */
+      /** 灰度模式 */
       grayscale: boolean;
-      /** colour weakness mode */
+      /** 色弱模式 */
       colourWeakness: boolean;
-      /** Whether to recommend color */
+      /** 是否推荐颜色 */
       recommendColor: boolean;
-      /** Theme color */
+      /** 主题颜色 */
       themeColor: string;
-      /** Other color */
+      /** 其他颜色 */
       otherColor: OtherColor;
-      /** Whether info color is followed by the primary color */
+      /** 信息颜色是否跟随主色 */
       isInfoFollowPrimary: boolean;
-      /** Reset cache strategy */
+      /** 重置缓存策略 */
       resetCacheStrategy: UnionKey.ResetCacheStrategy;
-      /** Layout */
+      /** 布局设置 */
       layout: {
-        /** Layout mode */
+        /** 布局模式 */
         mode: UnionKey.ThemeLayoutMode;
-        /** Scroll mode */
+        /** 滚动模式 */
         scrollMode: UnionKey.ThemeScrollMode;
         /**
-         * Whether to reverse the horizontal mix
+         * 是否反转水平混合布局
          *
-         * if true, the vertical child level menus in left and horizontal first level menus in top
+         * 如果为true，左侧显示垂直子菜单，顶部显示水平一级菜单
          */
         reverseHorizontalMix: boolean;
       };
-      /** Page */
+      /** 页面设置 */
       page: {
-        /** Whether to show the page transition */
+        /** 是否显示页面过渡动画 */
         animate: boolean;
-        /** Page animate mode */
+        /** 页面动画模式 */
         animateMode: UnionKey.ThemePageAnimateMode;
       };
-      /** Header */
+      /** 头部设置 */
       header: {
-        /** Header height */
+        /** 头部高度 */
         height: number;
-        /** Header breadcrumb */
+        /** 面包屑设置 */
         breadcrumb: {
-          /** Whether to show the breadcrumb */
+          /** 是否显示面包屑 */
           visible: boolean;
-          /** Whether to show the breadcrumb icon */
+          /** 是否显示面包屑图标 */
           showIcon: boolean;
         };
-        /** Multilingual */
+        /** 多语言设置 */
         multilingual: {
-          /** Whether to show the multilingual */
+          /** 是否显示多语言 */
           visible: boolean;
         };
       };
-      /** Tab */
+      /** 标签页设置 */
       tab: {
-        /** Whether to show the tab */
+        /** 是否显示标签页 */
         visible: boolean;
         /**
-         * Whether to cache the tab
+         * 是否缓存标签页
          *
-         * If cache, the tabs will get from the local storage when the page is refreshed
+         * 如果缓存，页面刷新时会从本地存储中获取标签页
          */
         cache: boolean;
-        /** Tab height */
+        /** 标签页高度 */
         height: number;
-        /** Tab mode */
+        /** 标签页模式 */
         mode: UnionKey.ThemeTabMode;
       };
-      /** Fixed header and tab */
+      /** 固定头部和标签页 */
       fixedHeaderAndTab: boolean;
-      /** Sider */
+      /** 侧边栏设置 */
       sider: {
-        /** Inverted sider */
+        /** 反转侧边栏颜色 */
         inverted: boolean;
-        /** Sider width */
+        /** 侧边栏宽度 */
         width: number;
-        /** Collapsed sider width */
+        /** 折叠侧边栏宽度 */
         collapsedWidth: number;
-        /** Sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        /** 混合布局时的侧边栏宽度 */
         mixWidth: number;
-        /** Collapsed sider width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        /** 混合布局时的折叠侧边栏宽度 */
         mixCollapsedWidth: number;
-        /** Child menu width when the layout is 'vertical-mix' or 'horizontal-mix' */
+        /** 混合布局时的子菜单宽度 */
         mixChildMenuWidth: number;
       };
-      /** Footer */
+      /** 底部设置 */
       footer: {
-        /** Whether to show the footer */
+        /** 是否显示底部 */
         visible: boolean;
-        /** Whether fixed the footer */
+        /** 是否固定底部 */
         fixed: boolean;
-        /** Footer height */
+        /** 底部高度 */
         height: number;
-        /** Whether float the footer to the right when the layout is 'horizontal-mix' */
+        /** 在水平混合布局时是否浮动到底部右侧 */
         right: boolean;
       };
-      /** Watermark */
+      /** 水印设置 */
       watermark: {
-        /** Whether to show the watermark */
+        /** 是否显示水印 */
         visible: boolean;
-        /** Watermark text */
+        /** 水印文字 */
         text: string;
       };
-      /** define some theme settings tokens, will transform to css variables */
+      /** 定义一些主题设置令牌，将转换为CSS变量 */
       tokens: {
         light: ThemeSettingToken;
         dark?: {
@@ -118,6 +118,7 @@ declare namespace App {
       };
     }
 
+    /** 其他颜色 */
     interface OtherColor {
       info: string;
       success: string;
@@ -125,20 +126,25 @@ declare namespace App {
       error: string;
     }
 
+    /** 主题颜色 */
     interface ThemeColor extends OtherColor {
       primary: string;
     }
 
+    /** 主题颜色键 */
     type ThemeColorKey = keyof ThemeColor;
 
+    /** 主题调色板颜色 */
     type ThemePaletteColor = {
       [key in ThemeColorKey | `${ThemeColorKey}-${ColorPaletteNumber}`]: string;
     };
 
+    /** 基础令牌 */
     type BaseToken = Record<string, Record<string, string>>;
 
+    /** 主题设置令牌颜色 */
     interface ThemeSettingTokenColor {
-      /** the progress bar color, if not set, will use the primary color */
+      /** 进度条颜色，如果未设置，则使用主色 */
       nprogress?: string;
       container: string;
       layout: string;
@@ -146,27 +152,30 @@ declare namespace App {
       'base-text': string;
     }
 
+    /** 主题设置令牌阴影 */
     interface ThemeSettingTokenBoxShadow {
       header: string;
       sider: string;
       tab: string;
     }
 
+    /** 主题设置令牌 */
     interface ThemeSettingToken {
       colors: ThemeSettingTokenColor;
       boxShadow: ThemeSettingTokenBoxShadow;
     }
 
+    /** 主题令牌颜色 */
     type ThemeTokenColor = ThemePaletteColor & ThemeSettingTokenColor;
 
-    /** Theme token CSS variables */
+    /** 主题令牌CSS变量 */
     type ThemeTokenCSSVars = {
       colors: ThemeTokenColor & { [key: string]: string };
       boxShadow: ThemeSettingTokenBoxShadow & { [key: string]: string };
     };
   }
 
-  /** Global namespace */
+  /** 全局命名空间 */
   namespace Global {
     type VNode = import('vue').VNode;
     type RouteLocationNormalizedLoaded = import('vue-router').RouteLocationNormalizedLoaded;
@@ -175,117 +184,123 @@ declare namespace App {
     type RoutePath = import('@elegant-router/types').RoutePath;
     type LastLevelRouteKey = import('@elegant-router/types').LastLevelRouteKey;
 
-    /** The global header props */
+    /** 全局头部属性 */
     interface HeaderProps {
-      /** Whether to show the logo */
+      /** 是否显示logo */
       showLogo?: boolean;
-      /** Whether to show the menu toggler */
+      /** 是否显示菜单切换按钮 */
       showMenuToggler?: boolean;
-      /** Whether to show the menu */
+      /** 是否显示菜单 */
       showMenu?: boolean;
     }
 
-    /** The global menu */
+    /** 全局菜单 */
     type Menu = {
       /**
-       * The menu key
+       * 菜单键
        *
-       * Equal to the route key
+       * 等同于路由键
        */
       key: string;
-      /** The menu label */
+      /** 菜单标签 */
       label: string;
-      /** The menu i18n key */
+      /** 菜单国际化键 */
       i18nKey?: I18n.I18nKey | null;
-      /** The route key */
+      /** 路由键 */
       routeKey: RouteKey;
-      /** The route path */
+      /** 路由路径 */
       routePath: RoutePath;
-      /** The menu icon */
+      /** 菜单图标 */
       icon?: () => VNode;
-      /** The menu children */
+      /** 菜单子项 */
       children?: Menu[];
     };
 
+    /** 面包屑 */
     type Breadcrumb = Omit<Menu, 'children'> & {
       options?: Breadcrumb[];
     };
 
-    /** Tab route */
+    /** 标签页路由 */
     type TabRoute = Pick<RouteLocationNormalizedLoaded, 'name' | 'path' | 'meta'> &
       Partial<Pick<RouteLocationNormalizedLoaded, 'fullPath' | 'query' | 'matched'>>;
 
-    /** The global tab */
+    /** 全局标签页 */
     type Tab = {
-      /** The tab id */
+      /** 标签页ID */
       id: string;
-      /** The tab label */
+      /** 标签页标签 */
       label: string;
       /**
-       * The new tab label
+       * 新标签页标签
        *
-       * If set, the tab label will be replaced by this value
+       * 如果设置，标签页标签将被此值替换
        */
       newLabel?: string;
       /**
-       * The old tab label
+       * 旧标签页标签
        *
-       * when reset the tab label, the tab label will be replaced by this value
+       * 重置标签页标签时，标签页标签将被此值替换
        */
       oldLabel?: string;
-      /** The tab route key */
+      /** 标签页路由键 */
       routeKey: LastLevelRouteKey;
-      /** The tab route path */
+      /** 标签页路由路径 */
       routePath: RouteMap[LastLevelRouteKey];
-      /** The tab route full path */
+      /** 标签页完整路径 */
       fullPath: string;
-      /** The tab fixed index */
+      /** 标签页固定索引 */
       fixedIndex?: number | null;
       /**
-       * Tab icon
+       * 标签页图标
        *
-       * Iconify icon
+       * Iconify图标
        */
       icon?: string;
       /**
-       * Tab local icon
+       * 标签页本地图标
        *
-       * Local icon
+       * 本地图标
        */
       localIcon?: string;
-      /** I18n key */
+      /** 国际化键 */
       i18nKey?: I18n.I18nKey | null;
     };
 
-    /** Form rule */
+    /** 表单规则 */
     type FormRule = import('naive-ui').FormItemRule;
 
-    /** The global dropdown key */
+    /** 全局下拉菜单键 */
     type DropdownKey = 'closeCurrent' | 'closeOther' | 'closeLeft' | 'closeRight' | 'closeAll';
   }
 
   /**
-   * I18n namespace
+   * 国际化命名空间
    *
-   * Locales type
+   * 语言类型
    */
   namespace I18n {
     type RouteKey = import('@elegant-router/types').RouteKey;
 
+    /** 语言类型 */
     type LangType = 'en-US' | 'zh-CN';
 
+    /** 语言选项 */
     type LangOption = {
       label: string;
       key: LangType;
     };
 
+    /** 国际化路由键 */
     type I18nRouteKey = Exclude<RouteKey, 'root' | 'not-found'>;
 
+    /** 表单消息 */
     type FormMsg = {
       required: string;
       invalid: string;
     };
 
+    /** 国际化模式 */
     type Schema = {
       system: {
         title: string;
@@ -510,16 +525,20 @@ declare namespace App {
       };
     };
 
+    /** 获取国际化键 */
     type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string
       ? T[K] extends Record<string, unknown>
         ? `${K}.${GetI18nKey<T[K]>}`
         : K
       : never;
 
+    /** 国际化键 */
     type I18nKey = GetI18nKey<Schema>;
 
+    /** 翻译选项 */
     type TranslateOptions<Locales extends string> = import('vue-i18n').TranslateOptions<Locales>;
 
+    /** 翻译函数接口 */
     interface $T {
       (key: I18nKey): string;
       (key: I18nKey, plural: number, options?: TranslateOptions<LangType>): string;
@@ -533,49 +552,52 @@ declare namespace App {
     }
   }
 
-  /** Service namespace */
+  /** 服务命名空间 */
   namespace Service {
-    /** Other baseURL key */
+    /** 其他基础URL键 */
     type OtherBaseURLKey = 'demo';
 
+    /** 服务配置项 */
     interface ServiceConfigItem {
-      /** The backend service base url */
+      /** 后端服务基础URL */
       baseURL: string;
-      /** The proxy pattern of the backend service base url */
+      /** 后端服务基础URL的代理模式 */
       proxyPattern: string;
     }
 
+    /** 其他服务配置项 */
     interface OtherServiceConfigItem extends ServiceConfigItem {
       key: OtherBaseURLKey;
     }
 
-    /** The backend service config */
+    /** 后端服务配置 */
     interface ServiceConfig extends ServiceConfigItem {
-      /** Other backend service config */
+      /** 其他后端服务配置 */
       other: OtherServiceConfigItem[];
     }
 
+    /** 简化版服务配置 */
     interface SimpleServiceConfig extends Pick<ServiceConfigItem, 'baseURL'> {
       other: Record<OtherBaseURLKey, string>;
     }
 
-    /** The backend service response data */
+    /** 后端服务响应数据 */
     type Response<T = unknown> = {
-      /** The backend service response code */
+      /** 后端服务响应码 */
       code: string;
-      /** The backend service response message */
+      /** 后端服务响应消息 */
       msg: string;
-      /** The backend service response data */
+      /** 后端服务响应数据 */
       data: T;
     };
 
-    /** The demo backend service response data */
+    /** 演示后端服务响应数据 */
     type DemoResponse<T = unknown> = {
-      /** The backend service response code */
+      /** 后端服务响应状态 */
       status: string;
-      /** The backend service response message */
+      /** 后端服务响应消息 */
       message: string;
-      /** The backend service response data */
+      /** 后端服务响应结果 */
       result: T;
     };
   }

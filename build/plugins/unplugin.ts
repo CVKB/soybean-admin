@@ -1,3 +1,4 @@
+// build\plugins\unplugin.ts
 import process from 'node:process';
 import path from 'node:path';
 import type { PluginOption } from 'vite';

@@ -86,4 +86,27 @@ declare namespace Api {
       home: import('@elegant-router/types').LastLevelRouteKey;
     }
   }
+
+  namespace ChangeOver {
+    interface WorkOrderInfo {
+      WorkOrderNO: string;
+      ProductName: string;
+      CreateDate: string;
+      Remark: string;
+    }
+
+    interface WorkOrderDetail {
+      WorkOrderNO: string;
+      PartNo: string;
+      ReqmtQuantity: number;
+      Item: string;
+      Plant: number;
+      Reservation: string;
+    }
+
+    interface WorkOrderInfos {
+      WorkOrderInfos: WorkOrderInfo[];
+      WorkOrderDetails: WorkOrderDetail[];
+    }
+  }
 }

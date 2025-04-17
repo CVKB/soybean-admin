@@ -1,18 +1,9 @@
 import { request } from '../request';
 
-/**
- * Login
- *
- * @param userName User name
- * @param password Password
- */
-export function fetchLogin(userName: string, password: string) {
-  return request<Api.Auth.LoginToken>({
-    url: '/Login/',
+export function getWorkOrderInfos(workorders: string[]) {
+  return request<Api.ChangeOver.WorkOrderInfos>({
+    url: '/GetWorkOrderInfos',
     method: 'post',
-    data: {
-      userName,
-      password
-    }
+    data: workorders
   });
 }
